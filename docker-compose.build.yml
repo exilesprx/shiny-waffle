@@ -1,0 +1,6 @@
+services:
+
+  cli:
+    image: exilesprx/shiny-waffle:latest
+    build:
+      context: .docker
