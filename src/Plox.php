@@ -38,8 +38,11 @@ class Plox
     protected static function runPrompt(): void
     {
         for(;;) {
-            if (! $line = readline(prompt: "> ")) {
+            $line = readline(prompt: "plox> ");
+            if ($line == "quit") {
                 break;
+            } else if (!$line) {
+                continue;
             }
 
             static::run($line);
