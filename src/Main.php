@@ -21,16 +21,24 @@ class Main
 
     protected function runFile(string $file): void
     {
-        // TODO: read the file contents and pass them to run
+        $content = file_get_contents($file, FILE_USE_INCLUDE_PATH);
+        $this->run($content);
     }
 
     protected function runPrompt(): void
     {
-        // TODO: read user input from cli and pass them to run
+        for(;;) {
+            if ($contents = readline(prompt: "> ")) {
+                break;
+            }
+
+            $this->run($contents);
+        }
     }
 
-    protected function run(): void
+    protected function run(string $contents): void
     {
         // TODO: print tokens from scanner
+        echo "$contents \n"; # testing
     }
 }
