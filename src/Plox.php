@@ -57,14 +57,14 @@ class Plox
         }
     }
 
-    private static function error(int $line, string $message): void
+    public static function error(int $line, string $message): void
     {
         self::report($line, "", $message);
     }
 
     private static function report(int $line, string $where, string $message): void
     {
-        echo sprintf("[line %d] Error%s: %s", $line, $where, $message);
+        echo sprintf("[line %d] Error%s: %s\n", $line, $where, $message);
         self::$hadError = true;
     }
 }
