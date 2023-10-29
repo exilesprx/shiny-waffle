@@ -7,7 +7,7 @@ class Main
     public function compile(array $args): void
     {
         if ( count($args) > 2) {
-            echo "Usage: jlox [script]";
+            echo "Usage: plox [script]";
             return;
         }
 
@@ -21,7 +21,11 @@ class Main
 
     protected function runFile(string $file): void
     {
-        $content = file_get_contents($file, FILE_USE_INCLUDE_PATH);
+        $content = file_get_contents(
+            filename: $file,
+            use_include_path: FILE_USE_INCLUDE_PATH
+        );
+
         $this->run($content);
     }
 
