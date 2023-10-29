@@ -4,45 +4,67 @@ namespace Waffle;
 
 class Plox
 {
-    public function compile(array $args): void
+    private static bool $hadError;
+
+    public static function compile(array $args): void
     {
         if ( count($args) > 2) {
             echo "Usage: plox [script]";
-            return;
+            exit(1);
         }
 
         if (count($args) == 2) {
-            $this->runFile($args[1]);
+            self::runFile($args[1]);
             return;
         }
 
-        $this->runPrompt();
+        self::runPrompt();
     }
 
-    protected function runFile(string $file): void
+    protected static function runFile(string $file): void
     {
         $content = file_get_contents(
             filename: $file,
             use_include_path: FILE_USE_INCLUDE_PATH
         );
 
-        $this->run($content);
-    }
+        self::run($content);
 
-    protected function runPrompt(): void
-    {
-        for(;;) {
-            if ($contents = readline(prompt: "> ")) {
-                break;
-            }
-
-            $this->run($contents);
+        if (self::$hadError) {
+            exit(1);
         }
     }
 
-    protected function run(string $contents): void
+    protected static function runPrompt(): void
     {
-        // TODO: print tokens from scanner
-        echo "$contents \n"; # testing
+        for(;;) {
+            if (! $line = readline(prompt: "> ")) {
+                break;
+            }
+
+            static::run($line);
+            self::$hadError = false;
+        }
+    }
+
+    protected static function run(string $source): void
+    {
+        $scanner = new Scanner($source);
+        $tokens = $scanner->scanTokens();
+
+        foreach($tokens as $token) {
+            echo $token;
+        }
+    }
+
+    private static function error(int $line, string $message): void
+    {
+        self::report($line, "", $message);
+    }
+
+    private static function report(int $line, string $where, string $message): void
+    {
+        echo sprintf("[line %d] Error%s: %s", $line, $where, $message);
+        self::$hadError = true;
     }
 }
