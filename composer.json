@@ -1,5 +1,12 @@
 {
   "require": {
+    "php": "8.2.*"
+  },
+  "autoload": {
+    "psr-4": {
+      "Waffle\\": "src/",
+      "Tests\\": "tests/"
+    }
   },
   "require-dev": {
     "phpunit/phpunit": "10.4.2"
