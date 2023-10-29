@@ -2,7 +2,7 @@
 
 namespace Waffle;
 
-class Main
+class Plox
 {
     public function compile(array $args): void
     {

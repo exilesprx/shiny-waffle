@@ -1,7 +1,7 @@
 <?php
 
-use Waffle\Main;
+use Waffle\Plox;
 
 require_once __DIR__ . "/vendor/autoload.php";
 
-(new Main())->compile($argv);
+(new Plox())->compile($argv);
