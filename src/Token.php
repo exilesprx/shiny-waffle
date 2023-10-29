@@ -17,6 +17,6 @@ class Token implements Stringable
 
     public function __toString(): string
     {
-        return sprintf("%s %s %s", $this->type, $this->lexeme, $this->literal);
+        return sprintf("%s %s %s\n", $this->type->name, $this->lexeme, $this->literal);
     }
 }

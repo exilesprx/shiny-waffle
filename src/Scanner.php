@@ -27,7 +27,7 @@ class Scanner
         }
 
         $this->tokens[] = new Token(TokenType::EOF, "", null, $this->line);
-        return [];
+        return $this->tokens;
     }
 
     private function isAtEnd(): bool
