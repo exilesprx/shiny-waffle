@@ -53,7 +53,7 @@ class Scanner
             '=' => $this->addToken($this->match('=') ? TokenType::EQUAL_EQUAL : TokenType::EQUAL),
             '<' => $this->addToken($this->match('=') ? TokenType::LESS_EQUAL : TokenType::LESS),
             '>' => $this->addToken($this->match('=') ? TokenType::GREATER_EQUAL : TokenType::GREATER),
-            '/' => function() {
+            '/' => (function() {
                 if ($this->match('/')) {
                     // keep advancing until the comment ends
                     while ($this->peek() != '\n' && !$this->isAtEnd()) {
@@ -63,7 +63,7 @@ class Scanner
                 }
 
                 $this->addToken(TokenType::SLASH);
-            },
+            })(),
             ' ', '\r', '\t' => null, // ignore white spaces
             '\n' => $this->line++,
             default => Plox::error($this->line, "Unexpected character.")
