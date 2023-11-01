@@ -66,6 +66,7 @@ class Scanner
             })(),
             ' ', '\r', '\t' => null, // ignore white spaces
             '\n' => $this->line++,
+            '"' => $this->string(),
             default => Plox::error($this->line, "Unexpected character.")
         };
     }
@@ -102,5 +103,27 @@ class Scanner
         }
 
         return $this->source[$this->current];
+    }
+
+    private function string(): void
+    {
+        // support multi-line comments
+        while($this->peek() != '"' && !$this->isAtEnd()) {
+            if ($this->peek() == '\n') {
+                $this->line++;
+            }
+            $this->advance();
+        }
+
+        if ($this->isAtEnd()) {
+            Plox::error($this->line, "Unterminated string");
+            return;
+        }
+
+        $this->advance(); // the closing quote
+
+        //  trim quotes
+        $string = substr($this->source, $this->start + 1, $this->current + 1);
+        $this->addToken(TokenType::STRING, $string);
     }
 }
