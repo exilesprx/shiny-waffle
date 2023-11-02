@@ -67,7 +67,13 @@ class Scanner
             ' ', '\r', '\t' => null, // ignore white spaces
             '\n' => $this->line++,
             '"' => $this->string(),
-            default => Plox::error($this->line, "Unexpected character.")
+            default => (function() use($char) {
+                if ( $this->isDigit($char)) {
+                    $this->number();
+                    return;
+                }
+                Plox::error($this->line, "Unexpected character.");
+            })()
         };
     }
 
@@ -76,7 +82,7 @@ class Scanner
         return $this->source[$this->current++];
     }
 
-    private function addToken(TokenType $type, Object $literal = null): void
+    private function addToken(TokenType $type, mixed $literal = null): void
     {
         $text = substr($this->source, $this->start, $this->current);
         $this->tokens[] = new Token($type, $text, $literal, $this->line);
@@ -125,5 +131,39 @@ class Scanner
         //  trim quotes
         $string = substr($this->source, $this->start + 1, $this->current + 1);
         $this->addToken(TokenType::STRING, $string);
+    }
+
+    private function isDigit(string $char): bool
+    {
+        return $char >= '0' && $char <= '9';
+    }
+
+    private function number(): void
+    {
+        $this->consumeDigits();
+
+        if ($this->peek() == "." && $this->isDigit($this->peekNext())) {
+            $this->advance();
+
+            $this->consumeDigits();
+        }
+
+        $this->addToken(TokenType::NUMBER, (int)substr($this->source, $this->start, $this->current));
+    }
+
+    private function consumeDigits(): void
+    {
+        while ($this->isDigit($this->peek())) {
+            $this->advance();
+        }
+    }
+
+    private function peekNext(): string
+    {
+        if ($this->current + 1 > strlen($this->source)) {
+            return '\0';
+        }
+
+        return $this->source[$this->current + 1];
     }
 }
