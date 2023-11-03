@@ -22,5 +22,8 @@
   },
   "require-dev": {
     "phpunit/phpunit": "10.4.2"
+  },
+  "script": {
+    "test": "./vendor/bin/phpunit --testdox test"
   }
 }
