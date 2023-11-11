@@ -9,7 +9,7 @@ class Token implements Stringable
     public function __construct(
         private TokenType $type,
         private string $lexeme,
-        private ?Object $literal,
+        private mixed $literal,
         private int $line
     )
     {

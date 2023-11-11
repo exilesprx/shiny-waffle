@@ -70,9 +70,11 @@ class Scanner
             default => (function() use($char) {
                 if ( $this->isDigit($char)) {
                     $this->number();
-                    return;
+                } elseif ($this->isAlpha($char)) {
+                    $this->identifier();
+                } else {
+                    Plox::error($this->line, "Unexpected character.");
                 }
-                Plox::error($this->line, "Unexpected character.");
             })()
         };
     }
@@ -84,7 +86,7 @@ class Scanner
 
     private function addToken(TokenType $type, mixed $literal = null): void
     {
-        $text = substr($this->source, $this->start, $this->current);
+        $text = substr($this->source, $this->start, $this->current - $this->start);
         $this->tokens[] = new Token($type, $text, $literal, $this->line);
     }
 
@@ -129,7 +131,7 @@ class Scanner
         $this->advance(); // the closing quote
 
         //  trim quotes
-        $string = substr($this->source, $this->start + 1, $this->current + 1);
+        $string = substr($this->source, $this->start + 1, $this->current - $this->start - 2);
         $this->addToken(TokenType::STRING, $string);
     }
 
@@ -148,7 +150,7 @@ class Scanner
             $this->consumeDigits();
         }
 
-        $this->addToken(TokenType::NUMBER, (int)substr($this->source, $this->start, $this->current));
+        $this->addToken(TokenType::NUMBER, (int)substr($this->source, $this->start, $this->current - $this->start));
     }
 
     private function consumeDigits(): void
@@ -165,5 +167,32 @@ class Scanner
         }
 
         return $this->source[$this->current + 1];
+    }
+
+    private function isAlpha(string $char): bool
+    {
+        return ($char >= 'a' && $char <= 'z')
+            || ($char >= 'A' && $char <= 'Z')
+            || $char == '_';
+    }
+
+    private function identifier(): void
+    {
+        while( $this->isAlphaNumeric($this->peek())) {
+            $this->advance();
+        }
+
+        $text = substr($this->source, $this->start, $this->current - $this->start);
+        $type = Keywords::get($text);
+        if (! $type) {
+            $type = TokenType::IDENTIFIER;
+        }
+
+        $this->addToken($type);
+    }
+
+    private function isAlphaNumeric(string $char): bool
+    {
+        return $this->isAlpha($char) || $this->isDigit($char);
     }
 }
