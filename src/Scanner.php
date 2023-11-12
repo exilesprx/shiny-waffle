@@ -10,7 +10,7 @@ class Scanner
     private int $line;
 
     public function __construct(
-        private string $source
+        private readonly string $source
     )
     {
         $this->tokens = [];
