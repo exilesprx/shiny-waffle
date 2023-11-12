@@ -150,7 +150,7 @@ class Scanner
             $this->consumeDigits();
         }
 
-        $this->addToken(TokenType::NUMBER, (int)substr($this->source, $this->start, $this->current - $this->start));
+        $this->addToken(TokenType::NUMBER, (float)substr($this->source, $this->start, $this->current - $this->start));
     }
 
     private function consumeDigits(): void
