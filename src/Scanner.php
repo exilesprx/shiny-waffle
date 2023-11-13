@@ -60,6 +60,20 @@ class Scanner
                         $this->advance();
                     }
                     return;
+                } elseif ($this->match('*')) {
+                    while($this->peek() != '*' && $this->peekNext() != '/' && !$this->isAtEnd()) {
+                        if ($this->peek() == '\n') {
+                            $this->line++;
+                        }
+
+                        $this->advance();
+                    }
+                    // consume the asterisk
+                    $this->advance();
+
+                    // consume the slash
+                    $this->advance();
+                    return;
                 }
 
                 $this->addToken(TokenType::SLASH);
