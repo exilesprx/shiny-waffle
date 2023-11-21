@@ -15,6 +15,7 @@ use Waffle\Grammar\Expressions\Set;
 use Waffle\Grammar\Expressions\Super;
 use Waffle\Grammar\Expressions\Unary;
 use Waffle\Grammar\Expressions\Variable;
+use Waffle\Printer\StringBuilder;
 
 class AstPrinter implements Grammar\Expressions\Visitor
 {
@@ -98,15 +99,15 @@ class AstPrinter implements Grammar\Expressions\Visitor
 
     private function parenthesize(string $name, Expr...$exprs): string
     {
-        $parts = [];
-        $parts[] = "(";
-        $parts[] = $name;
+        $stringBuilder = new StringBuilder();
+        $stringBuilder->append("(")
+            ->append($name);
         foreach ($exprs as $expr) {
-            $parts[] = " ";
-            $parts[] = $expr->accept($this);
+            $stringBuilder->append(" ")
+                ->append($expr->accept($this));
         }
-        $parts[] = ")";
+        $stringBuilder->append(")");
 
-        return implode($parts);
+        return (string)$stringBuilder;
     }
 }
