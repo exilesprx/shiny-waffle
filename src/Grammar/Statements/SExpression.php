@@ -2,17 +2,18 @@
 
 namespace Waffle\Grammar\Statements;
 
+use Waffle\Grammar\Expr;
 use Waffle\Grammar\Stmt;
 
-class Block extends Stmt
+class SExpression extends Stmt
 {
     public function __construct(
-        private readonly array $statements
+        private readonly Expr $expression
     ) {
     }
 
     public function accept(Visitor $visitor)
     {
-        return $visitor->visitBlockStmt($this);
+        return $visitor->visitExpressionStmt($this);
     }
 }

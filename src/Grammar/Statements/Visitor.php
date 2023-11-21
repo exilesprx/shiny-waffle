@@ -4,11 +4,11 @@ namespace Waffle\Grammar\Statements;
 
 interface Visitor
 {
-    public function visitBlockStmt(Block $stmt);
+    public function visitBlockStmt(SBlock $stmt);
 
     public function visitClassStmt(SClass $stmt);
 
-    public function visitExpressionStmt(Expression $stmt);
+    public function visitExpressionStmt(SExpression $stmt);
 
     public function visitFunctionStmt(SFunction $stmt);
 
