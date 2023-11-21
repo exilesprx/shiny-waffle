@@ -3,13 +3,14 @@
 namespace Waffle\Grammar\Expressions;
 
 use Waffle\Grammar\Expr;
+use Waffle\Token;
 
 class Binary extends Expr
 {
     public function __construct(
-        private readonly Expr $left,
-        private readonly Token $operator,
-        private readonly Expr $right
+        public readonly Expr $left,
+        public readonly Token $operator,
+        public readonly Expr $right
     ) {
     }
 

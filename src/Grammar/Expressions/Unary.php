@@ -8,8 +8,8 @@ use Waffle\Token;
 class Unary extends Expr
 {
     public function __construct(
-        private readonly Token $operator,
-        private readonly Expr $right
+        public readonly Token $operator,
+        public readonly Expr $right
     ) {
     }
 

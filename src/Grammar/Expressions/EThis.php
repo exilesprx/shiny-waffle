@@ -5,7 +5,7 @@ namespace Waffle\Grammar\Expressions;
 use Waffle\Grammar\Expr;
 use Waffle\Token;
 
-class This extends Expr
+class EThis extends Expr
 {
     public function __construct(
         private readonly Token $keyword

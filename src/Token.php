@@ -8,11 +8,10 @@ class Token implements Stringable
 {
     public function __construct(
         private TokenType $type,
-        private string $lexeme,
+        public readonly string $lexeme,
         private mixed $literal,
         private int $line
-    )
-    {
+    ) {
     }
 
     public function __toString(): string

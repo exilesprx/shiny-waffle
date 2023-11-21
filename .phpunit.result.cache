@@ -1,1 +1,1 @@
-{"version":1,"defects":[],"times":{"Tests\\ScannerTest::it_expects_single_token_when_source_is_empty":0.005}}
+{"version":1,"defects":{"Tests\\AstPrinterTest::it_expects_to_pretty_print_tree":7},"times":{"Tests\\ScannerTest::it_expects_single_token_when_source_is_empty":0.005,"Tests\\AstPrinterTest::it_expects_to_pretty_print_tree":0.03,"Tests\\AstPrinterTest::it_expects_missing_parenthesis_and_additional_space_not_to_match":0.004,"Tests\\AstPrinterTest::it_expects_the_printed_expression_to_match_exactly":0.002}}

@@ -22,7 +22,7 @@ interface Visitor
 
     public function visitSuperExpr(Super $expr);
 
-    public function visitThisExpr(This $expr);
+    public function visitThisExpr(EThis $expr);
 
     public function visitUnaryExpr(Unary $expr);
 

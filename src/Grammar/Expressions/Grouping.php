@@ -7,7 +7,7 @@ use Waffle\Grammar\Expr;
 class Grouping extends Expr
 {
     public function __construct(
-        private readonly Expr $grouping
+        public readonly Expr $expression
     ) {
     }
 
