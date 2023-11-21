@@ -197,7 +197,7 @@ class Scanner
         }
 
         $text = substr($this->source, $this->start, $this->current - $this->start);
-        $type = Keywords::get($text);
+        $type = Keywords::getTypeFrom($text);
         if (! $type) {
             $type = TokenType::IDENTIFIER;
         }

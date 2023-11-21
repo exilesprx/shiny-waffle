@@ -23,7 +23,7 @@ class Keywords
         'while' => TokenType::WHILE
     ];
 
-    public static function get(string $text): ?TokenType
+    public static function getTypeFrom(string $text): ?TokenType
     {
         if (isset(self::$keywords[$text])) {
             return self::$keywords[$text];

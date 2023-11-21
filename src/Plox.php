@@ -41,7 +41,7 @@ class Plox
             $line = readline(prompt: "plox> ");
             if ($line == "quit") {
                 break;
-            } else if (!$line) {
+            } elseif (!$line) {
                 continue;
             }
 
