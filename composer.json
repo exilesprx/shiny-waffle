@@ -2,7 +2,12 @@
   "name": "exilesprx/waffle",
   "description": "Compiler for the plox language, which is a project for fun :)",
   "type": "project",
-  "keywords": ["interpreter", "plox", "php", "fun"],
+  "keywords": [
+    "interpreter",
+    "plox",
+    "php",
+    "fun"
+  ],
   "license": "MIT",
   "authors": [
     {

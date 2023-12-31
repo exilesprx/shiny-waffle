@@ -8,7 +8,8 @@ on:
 jobs:
   tests:
     runs-on: ubuntu-latest
-    container: composer:2.6
+    container:
+      image: exilesprx/shiny-waffle:latest
     steps:
       - uses: actions/checkout@v3
 
