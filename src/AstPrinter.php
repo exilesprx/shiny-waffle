@@ -111,3 +111,4 @@ class AstPrinter implements Grammar\Expressions\Visitor
         return (string)$stringBuilder;
     }
 }
+
