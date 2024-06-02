@@ -29,7 +29,7 @@ class AstPrinter implements Grammar\Expressions\Visitor
         // TODO: Implement visitAssignExpr() method.
     }
 
-    public function visitBinaryExpr(Binary $expr)
+    public function visitBinaryExpr(Binary $expr): string
     {
         return $this->parenthesize(
             $expr->operator->lexeme,
@@ -48,7 +48,7 @@ class AstPrinter implements Grammar\Expressions\Visitor
         // TODO: Implement visitGetExpr() method.
     }
 
-    public function visitGroupingExpr(Grouping $expr)
+    public function visitGroupingExpr(Grouping $expr): string
     {
         return $this->parenthesize(
             "group",
@@ -56,7 +56,7 @@ class AstPrinter implements Grammar\Expressions\Visitor
         );
     }
 
-    public function visitLiteralExpr(Literal $expr)
+    public function visitLiteralExpr(Literal $expr): string
     {
         if (is_null($expr->value)) {
             return "nil";
@@ -84,7 +84,7 @@ class AstPrinter implements Grammar\Expressions\Visitor
         // TODO: Implement visitThisExpr() method.
     }
 
-    public function visitUnaryExpr(Unary $expr)
+    public function visitUnaryExpr(Unary $expr): string
     {
         return $this->parenthesize(
             $expr->operator->lexeme,
@@ -111,4 +111,3 @@ class AstPrinter implements Grammar\Expressions\Visitor
         return (string)$stringBuilder;
     }
 }
-

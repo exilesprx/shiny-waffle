@@ -37,7 +37,8 @@ class AstPrinterTest extends TestCase
     {
         $this->assertNotEquals(
             "* (- 123) (group 45.67) )",
-            $this->printer->printExpr($this->expr)
+            $this->printer->printExpr($this->expr),
+            "Missing parenthesis and additional space should not to match"
         );
     }
 
@@ -46,7 +47,8 @@ class AstPrinterTest extends TestCase
     {
         $this->assertEquals(
             "(* (- 123) (group 45.67))",
-            $this->printer->printExpr($this->expr)
+            $this->printer->printExpr($this->expr),
+            "The printed expression should match exactly"
         );
     }
 }

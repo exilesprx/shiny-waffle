@@ -8,7 +8,7 @@ class Plox
 
     public static function compile(array $args): void
     {
-        if ( count($args) > 2) {
+        if (count($args) > 2) {
             echo "Usage: plox [script]";
             exit(1);
         }
@@ -62,7 +62,7 @@ class Plox
 
     public static function error(int $line, string $message): void
     {
-        self::report($line, "", $message);
+        self::report(line: $line, where: "", message: $message);
     }
 
     private static function report(int $line, string $where, string $message): void
@@ -71,3 +71,4 @@ class Plox
         self::$hadError = true;
     }
 }
+
