@@ -2,6 +2,7 @@
 
 namespace Waffle;
 
+use Waffle\Exceptions\ParseError;
 use Waffle\Grammar\Expr;
 use Waffle\Grammar\Expressions\Binary;
 use Waffle\Grammar\Expressions\Grouping;
@@ -116,6 +117,21 @@ class Parser
             }
         }
         return false;
+    }
+
+    private function consume(TokenType $type, string $message): Token
+    {
+        if ($this->check($type)) {
+            return $this->advance();
+        }
+
+        return $this->error($this->peek(), $message);
+    }
+
+    private function error(Token $token, string $message): void
+    {
+        Plox::error($token, $message);
+        throw new ParseError();
     }
 
     private function check(TokenType $type): bool

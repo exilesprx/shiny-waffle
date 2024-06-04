@@ -70,5 +70,12 @@ class Plox
         echo sprintf("[line %d] Error%s: %s\n", $line, $where, $message);
         self::$hadError = true;
     }
-}
 
+    public static function errorOnToken(Token $token, string $message): void
+    {
+        match($token) {
+            TokenType::EOF => self::report($token->line, " at end", $message),
+            default => self::report($token->line, " at '{$token->lexeme}'", $message)
+        };
+    }
+}

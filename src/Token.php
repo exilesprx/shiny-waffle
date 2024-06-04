@@ -10,7 +10,7 @@ class Token implements Stringable
         private TokenType $type,
         public readonly string $lexeme,
         private mixed $literal,
-        private int $line
+        public readonly int $line
     ) {
     }
 
@@ -19,3 +19,4 @@ class Token implements Stringable
         return sprintf("%s %s %s\n", $this->type->name, $this->lexeme, $this->literal);
     }
 }
+
