@@ -125,13 +125,13 @@ class Parser
             return $this->advance();
         }
 
-        return $this->error($this->peek(), $message);
+        throw $this->error($this->peek(), $message);
     }
 
-    private function error(Token $token, string $message): void
+    private function error(Token $token, string $message): ParseError
     {
         Plox::error($token, $message);
-        throw new ParseError();
+        return new ParseError();
     }
 
     private function check(TokenType $type): bool
