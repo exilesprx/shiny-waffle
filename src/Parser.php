@@ -14,8 +14,17 @@ class Parser
     private int $current = 0;
 
     public function __construct(
-        private array $tokens
+        private array $tokens,
     ) {
+    }
+
+    public function parse(): Expr|null
+    {
+        try {
+            return $this->expression();
+        } catch(ParseError $error) {
+            return null;
+        }
     }
 
     private function expression(): Expr
@@ -106,9 +115,11 @@ class Parser
             $this->consume(TokenType::RIGHT_PAREN, "Expect ')' after expression.");
             return new Grouping($expr);
         }
+
+        throw $this->error($this->peek(), "Expect expression.");
     }
 
-    private function match(int ...$types): bool
+    private function match(TokenType ...$types): bool
     {
         foreach($types as $type) {
             if ($this->check($type)) {
@@ -134,6 +145,21 @@ class Parser
         return new ParseError();
     }
 
+    private function synchronize(): void
+    {
+        $this->advance();
+
+        while(!$this->isAtEnd()) {
+            if ($this->previous()->type == TokenType::SEMICOLON) {
+                return;
+            }
+
+            match($this->peek()->type) {
+                TokenType::ENTITY, TokenType::FUN, TokenType::VAR, TokenType::FOR, TokenType::IF, TokenType::WHILE, TokenType::PRINT, TokenType::RETURN => null,
+                default => $this->advance()
+            };
+        }
+    }
     private function check(TokenType $type): bool
     {
         if ($this->isAtEnd()) {

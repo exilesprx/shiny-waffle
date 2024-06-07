@@ -4,7 +4,7 @@ namespace Waffle;
 
 class Plox
 {
-    private static bool $hadError;
+    private static bool $hadError = false;
 
     public static function compile(array $args): void
     {
@@ -54,10 +54,14 @@ class Plox
     {
         $scanner = new Scanner($source);
         $tokens = $scanner->scanTokens();
+        $parser = new Parser($tokens);
+        $expr = $parser->parse();
 
-        foreach($tokens as $token) {
-            echo $token;
+        if (self::$hadError) {
+            return;
         }
+
+        echo (new AstPrinter())->printExpr($expr);
     }
 
     public static function error(int $line, string $message): void

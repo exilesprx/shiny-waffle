@@ -7,9 +7,9 @@ use Stringable;
 class Token implements Stringable
 {
     public function __construct(
-        private TokenType $type,
+        public readonly TokenType $type,
         public readonly string $lexeme,
-        private mixed $literal,
+        public readonly mixed $literal,
         public readonly int $line
     ) {
     }
@@ -19,4 +19,3 @@ class Token implements Stringable
         return sprintf("%s %s %s\n", $this->type->name, $this->lexeme, $this->literal);
     }
 }
-
